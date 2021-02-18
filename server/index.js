@@ -9,7 +9,7 @@ const messageRoutes = require('./routes/message')
 const {loginRequired, correctUser} = require('./middleware/auth')
 app.use(express.static('public'))
 
-// const PORT = 8081;
+const PORT = 8081;
 app.use(cors());
 app.use(bodyParser.json())
 
@@ -39,6 +39,6 @@ app.use( (req,res, next) =>{
 
 app.use(errorHandler)
 
-app.listen(process.env.PORT || 8081, process.env.IP, ()=>{
-	console.log(`Server is running on PORT`)
+app.listen( PORT, process.env.IP, ()=>{
+	console.log(`Server is running on PORT`, PORT)
 })

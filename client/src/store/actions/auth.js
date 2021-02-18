@@ -1,5 +1,6 @@
 import {apiCall} from '../../services/api'
 import {SET_CURRENT_USER} from '../actionTypes'
+import {addError, removeError} from './error'
 
 export function setCurrentUser(user) {
 	return{
@@ -11,14 +12,23 @@ export function setCurrentUser(user) {
 export function authUser (type, userData) {
 	return dispatch => {
 		return new Promise((resolve, reject) => {
-			return apiCall('post', `/api/auth/${type}`, userData).then(({token, ...user}) => {
-				localStorage.setItem('jstToken', token)
-				dispatch(setCurrentUser(user))
-				resolve()
-			}).catch(err => console.log(err))
+			return apiCall('post', `/api/auth/${type}`, userData)
+				.then(({token, ...user}) => {
+					localStorage.setItem('jwtToken', token)
+					dispatch(setCurrentUser(user))
+					dispatch(removeError())
+					resolve()
+				})
+				.catch(err => {
+					dispatch(addError(err.message))
+					console.log(err.message)
+					reject()
+				})
 		})
 	}
 }
+
+
 
 
 
