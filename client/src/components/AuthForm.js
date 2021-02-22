@@ -18,14 +18,21 @@ class AuthForm extends Component{
 	handleSubmit = e => {
     e.preventDefault();
     const authType = this.props.signUp ? "signup" : "signin";
-    this.props.onAuth(authType, this.state).then(() => {
-      console.log("LOGGED IN!");
-    });
+    this.props.onAuth(authType, this.state)
+		.then(() => {
+		  this.props.history.push('/')
+		}).catch(()=> 
+			 console.log('error') 
+		)
   };
 	
 	render(){
 		const {email, username, password, profileImageUrl} = this.state
-		const {heading, buttonText, signUp, errors, onAuth} = this.props
+		const {heading, buttonText, signUp, errors, history , removeError} = this.props
+		
+		history.listen(() => {
+			removeError()
+		})
 		
 		return(
 			<div>
