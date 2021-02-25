@@ -1,11 +1,11 @@
-import {LOAD_MESSAGES, REMOVE_MESSAGES} from '../actionTypes'
+import {LOAD_MESSAGES, REMOVE_MESSAGE} from '../actionTypes'
 
 const messages = (state=[],action) => {
 	switch (action.type){
 		case LOAD_MESSAGES:
-			console.log({...action.messages})
 			return [...action.messages]
-			
+		case REMOVE_MESSAGE: 
+			return  state.filter(msg => msg._id !== action.id)
 		default :
 			return state
 	}

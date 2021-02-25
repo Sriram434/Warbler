@@ -7,6 +7,7 @@ const errorHandler = require('./handlers/error')
 const authRoutes = require('./routes/auth')
 const messageRoutes = require('./routes/message')
 const {loginRequired, correctUser} = require('./middleware/auth')
+const db = require('./models/index')
 app.use(express.static('public'))
 
 const PORT = 8081;
@@ -18,6 +19,7 @@ app.use('/api/users/:id/messages',loginRequired, correctUser, messageRoutes)
 // All routes
 
 app.get('/api/messages', loginRequired, async function(req, res, next){
+	
 	try{
 		let messages = await db.Message.find()
 		.sort({createdAt: 'desc'})
@@ -25,7 +27,7 @@ app.get('/api/messages', loginRequired, async function(req, res, next){
 			username: true,
 			profileImageUrl: true
 		})
-		return res.status(200).status(messages)
+		return res.status(200).send(messages)
 	} catch(err){
 		return next(err.message)
 	}

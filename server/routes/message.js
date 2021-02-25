@@ -7,7 +7,7 @@ const {createMessage,getMessage, deleteMessage} = require('../handlers/message')
 router.route('/').post(createMessage)
 
 //prefix - /api/users/:id/messages/:message._id
-router.route('/:message.id')
+router.route('/:message_id')
 	  .get(getMessage)
 	  .delete(deleteMessage)
 
