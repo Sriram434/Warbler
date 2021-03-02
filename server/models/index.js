@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 mongoose.set('debug', true)
 mongoose.Promise = Promise;
 
-mongoose.connect('mongodb://localhost/warbler',{
+mongoose.connect( process.env.MONGOLAB_URI || 'mongodb://localhost/warbler',{
 	keepAlive: true,useNewUrlParser: true
 })
 .then( () => console.log("connected to DB."))
